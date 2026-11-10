@@ -16,6 +16,16 @@ import IntelligencePage from './pages/intelligence/IntelligencePage';
 import ResearchPage from './pages/research/ResearchPage';
 import DiplomacyPage from './pages/diplomacy/DiplomacyPage';
 
+// paths that have a real page; everything else falls back to the placeholder
+const REAL_PAGES = {
+  '/world': <World />,
+  '/banking': <Banking />,
+  '/justice': <JusticePage />,
+  '/intelligence': <IntelligencePage />,
+  '/research': <ResearchPage />,
+  '/diplomacy': <DiplomacyPage />,
+};
+
 export default function App() {
   const { user, loading, signOut } = useAuth();
   const { profile, loading: profileLoading, error } = useProfile();
@@ -51,21 +61,15 @@ export default function App() {
       <Route element={<MainLayout />}>
         <Route index element={<CommandCenter />} />
         <Route path="settings" element={<Settings />} />
-        <Route path="world" element={<World />} />
-        <Route path="banking" element={<Banking />} />
-        {NAV_ITEMS.filter((i) => i.phase !== undefined && i.path !== '/world' && i.path !== '/banking').map((i) => (
+        {NAV_ITEMS.filter((i) => i.phase !== undefined).map((i) => (
           <Route
             key={i.path}
             path={i.path.slice(1)}
-            element={<ModulePlaceholder label={i.label} phase={i.phase} />}
+            element={REAL_PAGES[i.path] || <ModulePlaceholder label={i.label} phase={i.phase} />}
           />
         ))}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
-      <Route path="/justice" element={<JusticePage />} />
-      <Route path="/intelligence" element={<IntelligencePage />} />
-<Route path="/research" element={<ResearchPage />} />
-<Route path="/diplomacy" element={<DiplomacyPage />} />
     </Routes>
   );
 }
