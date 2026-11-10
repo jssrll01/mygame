@@ -15,6 +15,12 @@ import JusticePage from './pages/justice/JusticePage';
 import IntelligencePage from './pages/intelligence/IntelligencePage';
 import ResearchPage from './pages/research/ResearchPage';
 import DiplomacyPage from './pages/diplomacy/DiplomacyPage';
+import Government from './pages/government/Government';
+import Military from './pages/military/Military';
+import Crime from './pages/crime/Crime';
+import Markets from './pages/markets/Markets';
+import Business from './pages/business/Business';
+import WorldEngineAdmin from './pages/admin/WorldEngineAdmin';
 
 // paths that have a real page; everything else falls back to the placeholder
 const REAL_PAGES = {
@@ -24,6 +30,11 @@ const REAL_PAGES = {
   '/intelligence': <IntelligencePage />,
   '/research': <ResearchPage />,
   '/diplomacy': <DiplomacyPage />,
+  '/government': <Government />,
+  '/military': <Military />,
+  '/underworld': <Crime />,
+  '/markets': <Markets />,
+  '/business': <Business />,
 };
 
 export default function App() {
@@ -61,6 +72,7 @@ export default function App() {
       <Route element={<MainLayout />}>
         <Route index element={<CommandCenter />} />
         <Route path="settings" element={<Settings />} />
+        <Route path="admin" element={<WorldEngineAdmin />} />
         {NAV_ITEMS.filter((i) => i.phase !== undefined).map((i) => (
           <Route
             key={i.path}
